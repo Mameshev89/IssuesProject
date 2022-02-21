@@ -73,7 +73,7 @@ public class Issue {
         return closed;
     }
 
-    public void setClosed(boolean closed) {
+    public void setStatus(boolean closed) {
         this.closed = closed;
     }
 }

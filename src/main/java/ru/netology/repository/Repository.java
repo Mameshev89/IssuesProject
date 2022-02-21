@@ -17,17 +17,22 @@ public class Repository {
         issues.add(issue);
     }
 
+    public void saveAll(List<Issue> issue) {
+        this.issues.addAll(issue);
+    }
+
     public void removeById(int id) {
         issues.removeIf(el -> el.getId() == id);
     }
 
-    public void removeAllElements(List<Issue> item){
+    public void removeAllElements(List<Issue> item) {
         this.issues.removeAll(item);
     }
 
-    public Issue findById( int id){
-        for (Issue item:issues) {
-            if(item.getId()==id){
+
+    public Issue findById(int id) {
+        for (Issue item : issues) {
+            if (item.getId() == id) {
                 return item;
             }
         }

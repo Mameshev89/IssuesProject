@@ -22,40 +22,46 @@ public class Manager {
         repository.save(issue);
     }
 
-    public void close(int id) {
+    public List<Issue> searchAll() {
+        return repository.findAll();
+    }
+
+    public void openIssue(int id) {
         if (repository.findById(id) != null) {
-            for (Issue item : repository.findAll()) {
-                item.setClosed(false);
+            for (Issue issue : repository.findAll()) {
+                if (issue.getId() == id) {
+                    issue.setStatus(false);
+                }
             }
         }
     }
 
-    public void open(int id) {
+    public void closeIssue(int id) {
         if (repository.findById(id) != null) {
-            for (Issue item : repository.findAll()) {
-                item.setClosed(true);
+            for (Issue issue : repository.findAll()) {
+                if (issue.getId() == id) {
+                    issue.setStatus(true);
+                }
             }
         }
     }
 
     public List<Issue> closed() {
-        List<Issue> tmp = new ArrayList<>();
         for (Issue item : repository.findAll()) {
-            if (item.isClosed()) {
-                tmp.add(item);
+            if (!item.isClosed()) {
+                issues.add(item);
             }
         }
-        return tmp;
+        return issues;
     }
 
     public List<Issue> opened() {
-        List<Issue> tmp = new ArrayList<>();
         for (Issue item : repository.findAll()) {
             if (item.isClosed()) {
-                tmp.add(item);
+                issues.add(item);
             }
         }
-        return tmp;
+        return issues;
     }
 
     public List<Issue> searchByAuthor(String text) {
@@ -68,20 +74,20 @@ public class Manager {
         return tmp;
     }
 
-    public List<Issue> searchByAssigned(Predicate<Set>predicate) {
-        List<Issue>tmp=new ArrayList<>();
-        for (Issue item:repository.findAll()) {
-            if(predicate.test(item.getAssigned())){
+    public List<Issue> searchByAssigned(Predicate<Set> predicate) {
+        List<Issue> tmp = new ArrayList<>();
+        for (Issue item : repository.findAll()) {
+            if (predicate.test(item.getAssigned())) {
                 tmp.add(item);
             }
         }
-       return tmp;
+        return tmp;
     }
 
     public List<Issue> searchByLabel(Predicate<Set> predicate) {
-        List<Issue>tmp=new ArrayList<>();
-        for (Issue item:repository.findAll()) {
-            if(predicate.test(item.getLabel())){
+        List<Issue> tmp = new ArrayList<>();
+        for (Issue item : repository.findAll()) {
+            if (predicate.test(item.getLabel())) {
                 tmp.add(item);
             }
         }
