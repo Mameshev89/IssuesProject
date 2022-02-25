@@ -3,10 +3,7 @@ package ru.netology.manager;
 import ru.netology.domain.Issue;
 import ru.netology.repository.Repository;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Predicate;
 
 public class Manager {
@@ -22,10 +19,13 @@ public class Manager {
         repository.save(issue);
     }
 
+    public void addAll(List<Issue> issues) {
+        repository.saveAll(issues);
+    }
+
     public List<Issue> searchAll() {
         return repository.findAll();
     }
-
     public void openIssue(int id) {
         if (repository.findById(id) != null) {
             for (Issue issue : repository.findAll()) {
@@ -46,19 +46,21 @@ public class Manager {
         }
     }
 
-    public List<Issue> closed() {
-        for (Issue item : repository.findAll()) {
-            if (!item.isClosed()) {
-                issues.add(item);
+    // Открытие и закрытие issue.
+
+    public List<Issue> isOpened() {
+        for (Issue issue : repository.findAll()) {
+            if (!issue.isClosed()) {
+                issues.add(issue);
             }
         }
         return issues;
     }
 
-    public List<Issue> opened() {
-        for (Issue item : repository.findAll()) {
-            if (item.isClosed()) {
-                issues.add(item);
+    public List<Issue> isClosed() {
+        for (Issue issue : repository.findAll()) {
+            if (issue.isClosed()) {
+                issues.add(issue);
             }
         }
         return issues;
